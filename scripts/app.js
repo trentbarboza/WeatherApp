@@ -1,9 +1,10 @@
 let input = document.getElementById('input');
 let searchBtn = document.getElementById('searchBtn');
+let icon = document.getElementById('icon');
 
 
 function getWeather() {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=99ddde24d75f18e8da53fbebabbdd073")
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=philadelphia,usa&APPID=99ddde24d75f18e8da53fbebabbdd073")
     .then(resp => resp.json())
     .then(data => {
         console.log(data);

@@ -46,6 +46,7 @@ function getWeatherData() {
         feelsLike.textContent = "Feels Like: " + data.main.feels_like;
         wind.textContent = "Wind: " + data.wind.speed + " mph";
         humidity.textContent = "Humidity: " + data.main.humidity;
+        desc.textContent = data.weather.main;
 
         //console.log(data);
     });

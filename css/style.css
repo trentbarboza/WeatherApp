@@ -38,3 +38,9 @@ background-color: rgba(95, 17, 17, 0.1) !important;
 .paddingTop{
     padding-top: 100px;
 }
+
+.dayTempTxt{
+font-family: Arial, Helvetica, sans-serif;
+color: rgb(112, 112, 112);
+size: 40px;
+}

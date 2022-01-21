@@ -42,5 +42,15 @@ background-color: rgba(95, 17, 17, 0.1) !important;
 .dayTempTxt{
 font-family: Arial, Helvetica, sans-serif;
 color: rgb(112, 112, 112);
-size: 40px;
+font-size: 25px;
+}
+
+.bookmark{
+    width: 1vw;
+}
+
+.rotate{
+    width: 1.5rem;
+    padding: 0;
+    margin: 0%;
 }

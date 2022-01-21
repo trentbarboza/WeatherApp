@@ -37,8 +37,7 @@ function getWeather() {
         feelsLike.textContent = "Feels Like: " + data.main.feels_like + "°F";
         wind.textContent = "Wind: " + data.wind.speed + " mph";
         humidity.textContent = "Humidity: " + data.main.humidity + "%";
-        console.log(desc.textContent = data.weather[1])
-        //desc.textContent = data.weather[2];
+        desc.textContent = data.weather[0].main;
     });
 }
 getWeather();
@@ -47,10 +46,15 @@ function get5DayWeather() {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=philadelphia,usa&units=imperial&APPID=99ddde24d75f18e8da53fbebabbdd073`)
     .then(resp => resp.json())
     .then(data => {
+        day1.textContent = displayWeekday(data.list[0].dt_txt);
         day1Temp.textContent = data.list[0].main.temp_max + " / " + data.list[0].main.temp_min + "°";
+        day2.textContent = displayWeekday(data.list[7].dt_txt);
         day2Temp.textContent = data.list[7].main.temp_max + " / " + data.list[7].main.temp_min + "°";
+        day3.textContent = displayWeekday(data.list[15].dt_txt);
         day3Temp.textContent = data.list[15].main.temp_max + " / " + data.list[15].main.temp_min + "°";
+        day4.textContent = displayWeekday(data.list[23].dt_txt);
         day4Temp.textContent = data.list[23].main.temp_max + " / " + data.list[23].main.temp_min + "°";
+        day5.textContent = displayWeekday(data.list[31].dt_txt);
         day5Temp.textContent = data.list[31].main.temp_max + " / " + data.list[31].main.temp_min + "°";
     });
 }
@@ -60,18 +64,22 @@ function getWeatherCelsius(){
     fetch("https://api.openweathermap.org/data/2.5/weather?q=philadelphia,usa&units=metric&APPID=99ddde24d75f18e8da53fbebabbdd073")
     .then(resp => resp.json())
     .then(data => {
-        Location.textContent = data.name + "," + data.sys.country;
-        Icon.textContent = data.weather.icon;
+        // Location.textContent = data.name + "," + data.sys.country;
+        // Icon.textContent = data.weather.icon;
         temp.textContent = data.main.temp + "°C";
         feelsLike.textContent = "Feels Like: " + data.main.feels_like + "°C";
-        wind.textContent = "Wind: " + data.wind.speed + " mph";
-        humidity.textContent = "Humidity: " + data.main.humidity + "%";
-        desc.textContent = data.weather[1].main;
+        // wind.textContent = "Wind: " + data.wind.speed + " mph";
+        // humidity.textContent = "Humidity: " + data.main.humidity + "%";
+        // desc.textContent = data.weather[0].main;
     });
 }
 
 F2CBTN.addEventListener('click', function(e){
-    getWeatherCelsius();
+    if(input.value == ""){
+        getWeatherCelsius();
+    }else{
+        
+    }
 })
 
 
@@ -90,20 +98,30 @@ function getWeatherInput() {
         feelsLike.textContent = "Feels Like: " + data.main.feels_like + "°F";
         wind.textContent = "Wind: " + data.wind.speed + " mph";
         humidity.textContent = "Humidity: " + data.main.humidity + "%";
-        desc.textContent = data.weather.description;
-
-        //console.log(data);
+        desc.textContent = data.weather[0].main;
     });
 }
+
+function displayWeekday(time){
+    let d  = new Date(time);
+    let weekdays = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    return weekdays[d.getUTCDay()];
+}
+
 
 function get5DayWeatherInput() {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${input.value}&units=imperial&APPID=99ddde24d75f18e8da53fbebabbdd073`)
     .then(resp => resp.json())
     .then(data => {
+        day1.textContent = displayWeekday(data.list[0].dt_txt);
         day1Temp.textContent = data.list[0].main.temp_max + " / " + data.list[0].main.temp_min + "°";
         day2Temp.textContent = data.list[7].main.temp_max + " / " + data.list[7].main.temp_min + "°";
+        day2.textContent = displayWeekday(data.list[7].dt_txt);
         day3Temp.textContent = data.list[15].main.temp_max + " / " + data.list[15].main.temp_min + "°";
+        day3.textContent = displayWeekday(data.list[15].dt_txt);
         day4Temp.textContent = data.list[23].main.temp_max + " / " + data.list[23].main.temp_min + "°";
+        day4.textContent = displayWeekday(data.list[23].dt_txt);
         day5Temp.textContent = data.list[31].main.temp_max + " / " + data.list[31].main.temp_min + "°";
+        day5.textContent = displayWeekday(data.list[31].dt_txt);
     });
 }

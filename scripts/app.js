@@ -26,7 +26,13 @@ function getWeather() {
     .then(resp => resp.json())
     .then(data => {
         //console.log(data);
-
+        Location.textContent = data.name + "," + data.sys.country;
+        Icon.textContent = data.weather.icon;
+        temp.textContent = data.main.temp;
+        feelsLike.textContent = "Feels Like: " + data.main.feels_like;
+        wind.textContent = "Wind: " + data.wind.speed + " mph";
+        humidity.textContent = "Humidity: " + data.main.humidity + "%";
+        desc.textContent = data.weather.description;
     });
 }
 getWeather();
@@ -45,8 +51,8 @@ function getWeatherData() {
         temp.textContent = data.main.temp;
         feelsLike.textContent = "Feels Like: " + data.main.feels_like;
         wind.textContent = "Wind: " + data.wind.speed + " mph";
-        humidity.textContent = "Humidity: " + data.main.humidity;
-        desc.textContent = data.weather.main;
+        humidity.textContent = "Humidity: " + data.main.humidity + "%";
+        desc.textContent = data.weather.description;
 
         //console.log(data);
     });

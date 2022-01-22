@@ -23,7 +23,8 @@ let day1Temp = document.getElementById('day1Temp');
 let day2Temp = document.getElementById('day2Temp');
 let day3Temp = document.getElementById('day3Temp');
 
-
+let lat1;
+let lon1;
 
 
 function getWeather() {
@@ -38,6 +39,11 @@ function getWeather() {
         wind.textContent = "Wind: " + data.wind.speed + " mph";
         humidity.textContent = "Humidity: " + data.main.humidity + "%";
         desc.textContent = data.weather[0].main;
+        lat1 = data.coord.lat;
+        lon1 = data.coord.lon;
+
+        LatLon
+
     });
 }
 getWeather();
@@ -78,7 +84,7 @@ F2CBTN.addEventListener('click', function(e){
     if(input.value == ""){
         getWeatherCelsius();
     }else{
-        
+        getWeatherInputCelsius();
     }
 })
 
@@ -102,6 +108,21 @@ function getWeatherInput() {
     });
 }
 
+function getWeatherInputCelsius() {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input.value}&units=metric&APPID=99ddde24d75f18e8da53fbebabbdd073`)
+    .then(resp => resp.json())
+    .then(data => {
+        // Location.textContent = data.name + "," + data.sys.country;
+        // Icon.textContent = data.weather.icon;
+        temp.textContent = data.main.temp + "°C";
+        feelsLike.textContent = "Feels Like: " + data.main.feels_like + "°C";
+        // wind.textContent = "Wind: " + data.wind.speed + " mph";
+        // humidity.textContent = "Humidity: " + data.main.humidity + "%";
+        // desc.textContent = data.weather[0].main;
+    });
+}
+
+///////function to create weekdays to show up
 function displayWeekday(time){
     let d  = new Date(time);
     let weekdays = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -125,3 +146,13 @@ function get5DayWeatherInput() {
         day5.textContent = displayWeekday(data.list[31].dt_txt);
     });
 }
+
+
+function getLatLonWeather() {
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat1}&lon=${lon1}&appid=99ddde24d75f18e8da53fbebabbdd073`)
+    .then(resp => resp.json())
+    .then(data =>{
+        console.log(data)
+    })
+}
+getLatLonWeather();

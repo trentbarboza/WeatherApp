@@ -1,3 +1,12 @@
+import {prod, dev} from './environment.js';
+
+let apiKey;
+if(prod.isLive){
+    apiKey = prod.apiKey;
+}else{
+    apiKey = dev.apiKey;
+}
+
 let input = document.getElementById('input');
 let searchBtn = document.getElementById('searchBtn');
 let mainIcon = document.getElementById('mainIcon');
@@ -38,7 +47,7 @@ let lon2;
 let weatherOneCall2;
 
 function getWeather() {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=philadelphia,usa&units=imperial&APPID=99ddde24d75f18e8da53fbebabbdd073")
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=philadelphia,usa&units=imperial&APPID=${apiKey}`)
     .then(resp => resp.json())
     .then(data => {
         //console.log(data);
@@ -52,7 +61,7 @@ function getWeather() {
         lat1 = data.coord.lat;
         lon1 = data.coord.lon;
 
-        weatherOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat1}&lon=${lon1}&exclude=hourly,minutely&units=imperial&appid=99ddde24d75f18e8da53fbebabbdd073`
+        weatherOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat1}&lon=${lon1}&exclude=hourly,minutely&units=imperial&appid=${apiKey}`
 
         getOneCall(weatherOneCall);
     });
@@ -78,7 +87,7 @@ function getOneCall(weatherOneCall){
 
 
 function get5DayWeather() {
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=philadelphia,usa&units=imperial&APPID=99ddde24d75f18e8da53fbebabbdd073`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=philadelphia,usa&units=imperial&APPID=${apiKey}`)
     .then(resp => resp.json())
     .then(data => {
         day1.textContent = displayWeekday(data.list[0].dt_txt);
@@ -101,7 +110,7 @@ function get5DayWeather() {
 get5DayWeather();
 
 function getWeatherCelsius(){
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=philadelphia,usa&units=metric&APPID=99ddde24d75f18e8da53fbebabbdd073")
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=philadelphia,usa&units=metric&APPID=${apiKey}`)
     .then(resp => resp.json())
     .then(data => {
         temp.textContent = data.main.temp + "°C";
@@ -124,7 +133,7 @@ searchBtn.addEventListener('click', function(e){
 })
 
 function getWeatherInput() {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input.value}&units=imperial&APPID=99ddde24d75f18e8da53fbebabbdd073`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input.value}&units=imperial&APPID=${apiKey}`)
     .then(resp => resp.json())
     .then(data => {
         Location.textContent = data.name + "," + data.sys.country;
@@ -138,7 +147,7 @@ function getWeatherInput() {
         lat2 = data.coord.lat;
         lon2 = data.coord.lon;
 
-        weatherOneCall2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat2}&lon=${lon2}&exclude=hourly,minutely&units=imperial&appid=99ddde24d75f18e8da53fbebabbdd073`
+        weatherOneCall2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat2}&lon=${lon2}&exclude=hourly,minutely&units=imperial&appid=${apiKey}`
 
 
         getOneCall2(weatherOneCall2);
@@ -164,7 +173,7 @@ function getOneCall2(weatherOneCall2){
 
 
 function getWeatherInputCelsius() {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input.value}&units=metric&APPID=99ddde24d75f18e8da53fbebabbdd073`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input.value}&units=metric&APPID=${apiKey}`)
     .then(resp => resp.json())
     .then(data => {
         temp.textContent = data.main.temp + "°C";
@@ -181,7 +190,7 @@ function displayWeekday(time){
 
 
 function get5DayWeatherInput() {
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${input.value}&units=imperial&APPID=99ddde24d75f18e8da53fbebabbdd073`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${input.value}&units=imperial&APPID=${apiKey}`)
     .then(resp => resp.json())
     .then(data => {
         day1.textContent = displayWeekday(data.list[0].dt_txt);

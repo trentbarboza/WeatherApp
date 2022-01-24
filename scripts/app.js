@@ -1,4 +1,5 @@
 import { prod, dev } from './environment.js';
+import { SaveToLocalStorageByCityName, GetLocalStorage, RemoveFromLocalStorage } from './localStorage.js';
 
 let apiKey;
 if (prod.isLive) {
@@ -145,6 +146,18 @@ function getWeatherInput() {
             humidity.textContent = "Humidity: " + data.main.humidity + "%";
             desc.textContent = data.weather[0].main;
 
+            let favOn;
+            let cityLowerCase = input.value.toLowerCase();
+            favOn = checkIfFavorited(cityLowerCase);
+            console.log(favOn);
+            if (favOn) {
+                //the image is filled
+                favBTN.src = "./images/bookmark filled.png";
+            } else {
+                favBTN.src = "./images/Icon feather-bookmark.png";
+            }
+            favOn = !favOn;
+
             lat2 = data.coord.lat;
             lon2 = data.coord.lon;
 
@@ -203,12 +216,29 @@ function get5DayWeatherInput() {
 }
 
 
-let favOn = false;
+let favOn;
 favBTN.addEventListener('click', function (e) {
+    let userInput = input.value.toLowerCase();
+    favOn = checkIfFavorited(userInput);
+
     if (favOn == true) {
-        favBTN.src = "./images/bookmark filled.png"
+            RemoveFromLocalStorage(input.value.toLowerCase());
+            checkIfFavorited(input.value.toLowerCase());
+            favBTN.src = "./images/Icon feather-bookmark.png";
+
     } else {
-        favBTN.src = "./images/Icon feather-bookmark.png"
+        SaveToLocalStorageByCityName(input.value.toLowerCase());
+        checkIfFavorited(input.value.toLowerCase());
+        favBTN.src = "./images/bookmark filled.png";
+        
     }
     favOn = !favOn;
 })
+
+function checkIfFavorited(cityNameEntered) {
+    const favorites = GetLocalStorage();
+    console.log(JSON.stringify(favorites));
+    return favorites.includes(cityNameEntered.toLowerCase());
+}
+
+localStorage.clear();
